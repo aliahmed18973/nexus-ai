@@ -183,7 +183,7 @@ async function sendMsg(){
       translate:'You are Nexus AI translation assistant. Translate accurately. If user says "to [lang]: [text]" translate to that language. If no target language given, detect source and translate to English. Show original and translation clearly.',
       write:'You are Nexus AI writing assistant. Help write emails, essays, stories, cover letters, captions. Be creative and professional.'
     };
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys[mode]||sys.chat,messages:history})});
+  const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:sys[mode]||sys.chat,messages:history})});
     const data=await res.json();
     const reply=data.content?.map(b=>b.text||'').join('')||'Something went wrong. Please try again.';
     rmTyping();addMsg(reply,'bot');
